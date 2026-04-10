@@ -14,6 +14,8 @@ function getSuffix(day) {
     return 'th';
 }
 
+const now = new Date();
+document.getElementById("date").textContent = months[now.getMonth()] + " " + now.getDate() + getSuffix(now.getDate()) + ", " + now.getFullYear();
 
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -81,7 +83,7 @@ function makeguess() {
     guessCount++;
     if (guess == answer) {
         wins++;
-        document.getElementById("msg").textContent = 'Congratulations ' + userName + '! You\'ve guessed the number in ' + guessCount + ' attempts.';
+        document.getElementById("msg").textContent = 'Correct! ' + userName + ', you\'ve guessed the number in ' + guessCount + ' attempts.';
 
             updateScore(guessCount);
             resetScore();
@@ -93,11 +95,11 @@ function makeguess() {
     }
     if(answer !== 0){
         if(guess >= answer - 2 && guess <= answer + 2) {
-            document.getElementById("hotCold").textContent = 'You\'re hot!'
+            document.getElementById("msg").textContent = 'You\'re hot!'
         }else if(guess >= answer - 5 && guess <= answer + 5) {
-            document.getElementById("hotCold").textContent = 'You\'re warm!'
+            document.getElementById("msg").textContent = 'You\'re warm!'
         }else {
-            document.getElementById("hotCold").textContent = 'You\'re cold!'
+            document.getElementById("msg").textContent = 'You\'re cold!'
         }
     }
 }
@@ -137,6 +139,7 @@ function resetScore() {
 
 function giveUp() {
     losses++;
+    wins++;
     let range = 0;
     let level = document.getElementsByName("level");
     for(let i=0; i<level.length; i++) {
