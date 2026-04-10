@@ -13,12 +13,13 @@ function getSuffix(day) {
     if (day % 10 === 3) return 'rd';
     return 'th';
 }
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const now = new Date();
 document.getElementById("date").textContent = months[now.getMonth()] + " " + now.getDate() + getSuffix(now.getDate()) + ", " + now.getFullYear();
 
 
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 
 setInterval(() => {
     const date = new Date();
@@ -95,11 +96,11 @@ function makeguess() {
     }
     if(answer !== 0){
         if(guess >= answer - 2 && guess <= answer + 2) {
-            document.getElementById("msg").textContent = 'You\'re hot!'
+            document.getElementById("msg").textContent += 'You\'re hot!'
         }else if(guess >= answer - 5 && guess <= answer + 5) {
-            document.getElementById("msg").textContent = 'You\'re warm!'
+            document.getElementById("msg").textContent += 'You\'re warm!'
         }else {
-            document.getElementById("msg").textContent = 'You\'re cold!'
+            document.getElementById("msg").textContent += 'You\'re cold!'
         }
     }
 }
