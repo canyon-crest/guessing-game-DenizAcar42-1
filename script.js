@@ -15,10 +15,14 @@ function getSuffix(day) {
 }
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+
+
+
 const now = new Date();
-document.getElementById("date").textContent = months[now.getMonth()] + " " + now.getDate() + getSuffix(now.getDate()) + ", " + now.getFullYear();
-
-
+const initHours = now.getHours();
+const initMinutes = now.getMinutes().toString().padStart(2, '0');
+const initSeconds = now.getSeconds().toString().padStart(2, '0');
+document.getElementById("date").textContent = months[now.getMonth()] + " " + now.getDate() + getSuffix(now.getDate()) + ", " + now.getFullYear() + " " + initHours + ":" + initMinutes + ":" + initSeconds;
 
 
 setInterval(() => {
@@ -37,7 +41,7 @@ setInterval(() => {
     }
 
 
-    document.getElementById("date").textContent = months[month] + " " + day + getSuffix(day) + ", " + year;
+document.getElementById("date").textContent = months[month] + " " + day + getSuffix(day) + ", " + year + " " + hours + ":" + minutes + ":" + seconds;
 }, 1000);
 
 
