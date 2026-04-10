@@ -1,10 +1,21 @@
+let userName = '';
 const enterName = prompt("Please enter your name:");
 if (enterName) {
-    const userName = enterName.trim().slice(0, 1).toUpperCase() + enterName.trim().slice(1).toLowerCase();
-    console.log(userName);
+    userName = enterName.trim().slice(0, 1).toUpperCase() + enterName.trim().slice(1).toLowerCase();
 } else {
     alert("Invalid input. Please enter a valid name.");
 }
+
+function getSuffix(day) {
+    if (day >= 11 && day <= 13) return 'th';
+    if (day % 10 === 1) return 'st';
+    if (day % 10 === 2) return 'nd';
+    if (day % 10 === 3) return 'rd';
+    return 'th';
+}
+
+
+
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 setInterval(() => {
@@ -23,7 +34,7 @@ setInterval(() => {
     }
 
 
-    document.getElementById("date").textContent = months[month] + " " + day + ", " + year;
+    document.getElementById("date").textContent = months[month] + " " + day + getSuffix(day) + ", " + year;
 }, 1000);
 
 
@@ -51,7 +62,7 @@ function play() {
         }
         level[i].disabled = true;
     }
-    document.getElementById("msg").textContent = "Game started! Guess a number between 1 and " + range + ".";
+    document.getElementById("msg").textContent = "Game started! Guess a number between 1 and " + range + " " + userName + "!";
     answer = Math.floor(Math.random() * range) + 1;
     guessCount = 0;
     document.getElementById("guess").disabled = false;
@@ -64,13 +75,13 @@ function makeguess() {
     let range = 0;
   let guess = parseInt(document.getElementById("guess").value);
     if(isNaN(guess) || guess < 1 || guess > 100) {
-        document.getElementById("msg").textContent = "Please enter a valid integer between 1 and 100.";
+        document.getElementById("msg").textContent = "Please enter a valid integer between 1 and 100 " + userName + "!";
         return;
     }
     guessCount++;
     if (guess == answer) {
         wins++;
-        document.getElementById("msg").textContent = 'Congratulations! You\'ve guessed the number in ' + guessCount + ' attempts.';
+        document.getElementById("msg").textContent = 'Congratulations ' + userName + '! You\'ve guessed the number in ' + guessCount + ' attempts.';
 
             updateScore(guessCount);
             resetScore();
@@ -80,12 +91,14 @@ function makeguess() {
     } else {
         document.getElementById("msg").textContent = 'Too high! Try again.';
     }
-    if(guess >= answer - 2 && guess <= answer + 2) {
-        document.getElementById("hotCold").textContent = 'You\'re hot!'
-    }else if(guess >= answer - 5 && guess <= answer + 5) {
-        document.getElementById("hotCold").textContent = 'You\'re warm!'
-    }else {
-        document.getElementById("hotCold").textContent = 'You\'re cold!'
+    if(answer !== 0){
+        if(guess >= answer - 2 && guess <= answer + 2) {
+            document.getElementById("hotCold").textContent = 'You\'re hot!'
+        }else if(guess >= answer - 5 && guess <= answer + 5) {
+            document.getElementById("hotCold").textContent = 'You\'re warm!'
+        }else {
+            document.getElementById("hotCold").textContent = 'You\'re cold!'
+        }
     }
 }
 function updateScore(score) {
@@ -124,6 +137,7 @@ function resetScore() {
 
 function giveUp() {
     losses++;
+    let range = 0;
     let level = document.getElementsByName("level");
     for(let i=0; i<level.length; i++) {
         if(level[i].checked) {
@@ -131,10 +145,10 @@ function giveUp() {
         }
     }
 
-    document.getElementById("msg").textContent = 'The correct number was: ' + answer + '. Better luck next time!';
+    document.getElementById("msg").textContent = 'The correct number was: ' + answer + '. Better luck next time '+userName+'!';
     document.getElementById("hotCold").textContent = '';
     document.getElementById("losses").textContent = "Losses: " + losses;
-
+    updateScore(range);
     resetScore();
 }
 
